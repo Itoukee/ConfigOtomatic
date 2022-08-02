@@ -17,8 +17,8 @@ const controller = {
       const componentId = req.params.id;
       const comp = await ComponentService.deleteOne(componentId);
       
-      if (comp) return res.status(204).send();
-      return res.status(404).send("Component deleted");
+      if (comp) return res.status(204).send("Component deleted");
+      return res.status(404).send();
 
     } catch (error) {
       next(error);
