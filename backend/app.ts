@@ -7,7 +7,6 @@ import authRoute from "./routes/auth";
 import userRoute from "./routes/user";
 import componentRoute from "./routes/component";
 import configRoute from "./routes/config";
-
 // App
 
 //Route ping
@@ -21,8 +20,9 @@ app.use(
     extended: true,
   })
 );
+
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.status(200).send("Hello World");
 });
 
 app.use("/auth", authRoute);
