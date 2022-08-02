@@ -13,7 +13,7 @@ const config = {
   JWT_SECRET_TOKEN:
     process.env.JWT_SECRET_TOKEN ||
     "c21605c9d4dbfa00fd327f86a23bc37b07440ff7bcc7be6932aaa9e99f8601b45ec50b8da725cf3a8d7f49dd76f6556526ab625e9f671e65b6257996707d8a69",
-  JWT_EXPIRES_IN: 90,
+  JWT_EXPIRES_IN: 1,
 };
 
 export default config;

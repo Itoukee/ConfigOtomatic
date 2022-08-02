@@ -7,4 +7,8 @@ router.get("/:id", controller.getConfig);
 
 router.post("/create", controller.createConfig);
 
+router.patch("/:id", controller.updateConfig);
+
+router.delete("/:id", controller.deleteConfig);
+
 export default router;

@@ -4,19 +4,24 @@ import controller from "../controllers/users.controller";
 const router = express.Router();
 
 /*
- * Show all users
+ * /users : Show all users
  */
 router.get("/", controller.getAllUsers);
 
 /*
- * (get) /api/user/{id} :  Show one user
+ *  /users/{id} :  Show one user
  */
 
 router.get("/:userId", controller.getUser);
 
 /*
- *  (patch) Make change to a user
+ *  /users/one/{id} : Make change to a user
  */
 router.patch("/one/:userId", controller.patchUser);
+
+/**
+ *  /users/one/userId : Delete a user
+ */
+router.delete("/one/userId", controller.deleteUser);
 
 export default router;

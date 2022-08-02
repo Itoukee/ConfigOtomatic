@@ -6,9 +6,9 @@ const controller = {
   createConfig: async (req, res, next) => {
     try {
       const userId: string | undefined = req.body.userId;
-      const components: IComponent[] = req.body.components;
+      const components: IComponent[] | undefined = req.body.components;
 
-      if (!components || !userId) return res.send(400);
+      if (!components || !userId) return res.status(400).send("Bad JSON request");
 
       let price = 0;
       components.map((comp) => (price += comp.price));
@@ -18,23 +18,42 @@ const controller = {
         config: { components: components, price: price },
         visibility: false,
       };
-      const config = await ConfigService.addOne(newConfig);
+      const config: IConfig | undefined = await ConfigService.addOne(newConfig);
 
-      return res.send(config);
+      return res.status(201).send(config);
     } catch (error) {
       next(error);
     }
   },
   getConfig: async (req, res, next) => {
     try {
-      const id: IConfig["_id"] | undefined = req.params.id;
-      if (!id) return res.send(400);
-      const config = await ConfigService.getOne(id);
-      return res.send(config);
+      const config: IConfig | undefined = await ConfigService.getOne(req.params.id);
+      if (!config) return res.status(400).send("No Config");
+      return res.status(200).send(config);
     } catch (error) {
       next(error);
     }
   },
+  updateConfig: async (req, res, next) => {
+    try {
+      if (!req.body.newValues) return res.status(400).send("Bad JSON Request");
+      const config: IConfig | undefined = await ConfigService.getOne(req.params.id);
+      if (!config) return res.status(400).send("No Config");
+      await ConfigService.patchOne(req.params.id, req.body.newValues);
+      res.status(200).send("Config Patched");
+    } catch(error) {
+      next(error);
+    }
+  },
+  deleteConfig: async (req, res, next) => {
+    try {
+      await ConfigService.deleteOne(req.params.id);
+      res.status(200).send("Config Deleted");
+    } catch(error) {
+      next(error);
+    }
+  }
+
 };
 
 export default controller;
