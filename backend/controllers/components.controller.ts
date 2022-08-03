@@ -13,9 +13,13 @@ const controller = {
     }
   },
   deleteComponent: async (req, res, next) => {
-    try {
-      await ComponentService.deleteOne(req.params.id);
-      return res.status(200).send("Component Deleted");
+    try { 
+      const componentId = req.params.id;
+      const comp = await ComponentService.deleteOne(componentId);
+      
+      if (comp) return res.status(204).send("Component deleted");
+      return res.status(404).send();
+
     } catch (error) {
       next(error);
     }
