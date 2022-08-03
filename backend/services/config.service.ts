@@ -11,7 +11,7 @@ class ConfigService {
     return await Config.findByIdAndDelete(id);
   }
   static async patchOne(id: IConfig["_id"], newValues: Partial<IConfig>) {
-    return await Config.findByIdAndUpdate({id}, newValues);
+    return await Config.findByIdAndUpdate(id, newValues);
   }
 }
 export default ConfigService;

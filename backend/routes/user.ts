@@ -17,11 +17,11 @@ router.get("/:userId", controller.getUser);
 /*
  *  /users/one/{id} : Make change to a user
  */
-router.patch("/one/:userId", controller.patchUser);
+router.patch("/:userId", controller.patchUser);
 
 /**
  *  /users/one/userId : Delete a user
  */
-router.delete("/one/userId", controller.deleteUser);
+router.delete("/:userId", controller.deleteUser);
 
 export default router;

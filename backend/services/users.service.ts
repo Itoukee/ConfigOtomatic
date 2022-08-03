@@ -12,10 +12,10 @@ class UserService {
     return await User.create(user);
   }
   static async patchUser(userId: IUser["_id"], newValues: Partial<IUser>) {
-    return await User.findByIdAndUpdate({ _id: userId }, newValues);
+    return await User.findByIdAndUpdate(userId, newValues);
   }
   static async deleteUser(userId: IUser["_id"]) {
-    return await User.deleteOne(userId);
+    return await User.findByIdAndRemove(userId);
   }
 }
 export default UserService;

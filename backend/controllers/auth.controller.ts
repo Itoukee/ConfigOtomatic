@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { IUser } from "../models/user";
 import config from "../config";
 import bcrypt from "bcrypt"
+import UserService from "../services/users.service";
 
 const controller = {
   createOne: async (req, res, next) => {
@@ -52,20 +53,36 @@ const controller = {
       const user: IUser | null = await AuthService.findUser(req.body.mail);
       const refresh_token: string | undefined = req.body.refresh_token;
       const password: string | undefined = req.body.password;
+
+      if (!user) return res.status(401).send('No user');
       const validPassword: string | undefined = await bcrypt.compare(password, user?.password);
 
 
       if ((refresh_token === user?.refresh_token)) {
+        await updateToken(user);
         res.status(200).send("Connected with token");
       } else if (validPassword) {
+        await updateToken(user);
         res.status(200).send("Connected with password");
       } else {
-        res.status(401).send("Cannot login")
+        res.status(401).send("Cannot login");
       }
     } catch (error) {
       next(error);
     }
   },
 };
+
+
+async function updateToken(user: IUser) {
+  const token: string = jwt.sign(
+    { mail: user?.email, password: user?.password },
+    config.JWT_SECRET_TOKEN,
+    {
+      expiresIn: config.JWT_EXPIRES_IN,
+    }
+  );
+  await UserService.patchUser(user['_id'],{refresh_token : token})
+}
 
 export default controller;

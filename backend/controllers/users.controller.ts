@@ -22,8 +22,10 @@ const controller = {
   },
   patchUser: async (req, res, next) => {
     try {
-      if (!req.body.newValues || !req.params.IUser) return res.status(400).send("Bad JSON request");
-      await UserService.patchUser(req.params.IUser, req.body.newValues);
+      if (!req.body.newValues) return res.status(400).send("Bad JSON request");
+      console.log(req.params.userId);
+      console.log(req.body.newValues);
+      await UserService.patchUser(req.params.userId, req.body.newValues);
       return res.status(200).send("User patched");
     } catch (error) {
       next(error);
