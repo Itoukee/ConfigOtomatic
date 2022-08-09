@@ -8,6 +8,9 @@ class UserService {
   static async getUser(_id: IUser["_id"]) {
     return await User.findById(_id);
   }
+  static async getUserSession(refresh_token: IUser["refresh_token"]) {
+    return await User.findOne({refresh_token: refresh_token});
+  }
   static async createUser(user: IUser) {
     return await User.create(user);
   }
