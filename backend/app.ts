@@ -25,16 +25,17 @@ app.use(
     extended: true,
   })
 );
-app.use(auth);
+
+// app.use(auth)
 
 app.get("/", (req, res) => {
   res.status(200).send("Hello World");
 });
 
 app.use("/auth", authRoute);
-app.use("/users", userRoute);
+app.use("/users", auth, userRoute);
 app.use("/components", componentRoute);
-app.use("/config", configRoute);
+app.use("/config", auth, configRoute);
 
 /** 404 error handler */
 app.use((req, res) => {
