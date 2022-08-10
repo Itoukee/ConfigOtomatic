@@ -1,13 +1,18 @@
+import { useSelector } from "react-redux";
 import Components from "../components/Components";
 import { ComponentService } from "../services/components.service";
+import useConfig, { RootState } from "../stores/config/useConfig";
 import { IComponent } from "../types/computerTypes";
 
 const Home = ({ components }: { components: IComponent[] }) => {
+  const config = useSelector((state: RootState) => state.config);
+
   return (
     <div className="w-screen h-screen overflow-x-hidden">
       <div className="h-1/6 w-screen overflow-hidden flex flex-grow justify-center items-center bg-blue-300 space-x-2">
         <h1 className="text-2xl font-bold">Configaut&apos;omatic</h1>
         <h2>by Tropdachats</h2>
+        <p>{config.type}</p>
       </div>
       <div className="h-5/6 w-full flex flex-row justify-evenly mt-3">
         <div className="bg-red-300">

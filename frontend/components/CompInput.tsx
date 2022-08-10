@@ -1,6 +1,7 @@
 import { IComponent, IType } from "../types/computerTypes";
 import Image from "next/image";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { showComponents } from "../stores/config/config";
 
 type CompInputProps = {
   components: IComponent[];
@@ -9,13 +10,12 @@ type CompInputProps = {
 };
 
 const CompInput = ({ components, component, type }: CompInputProps) => {
-  const [activated, setActived] = useState<boolean>(false);
+  const dispatch = useDispatch();
   return (
     <div
       className="border border-gray-500 flex flex-row space-x-2"
-      onClick={() => setActived(!activated)}
+      onClick={() => dispatch(showComponents({ type: type, visible: true }))}
     >
-      {activated && <div className="absoulte top-0 bg-white ">Active</div>}
       {component ? (
         <Image src={component.image} alt="product-image" />
       ) : (

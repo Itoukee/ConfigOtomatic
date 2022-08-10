@@ -4,30 +4,41 @@ import { AppDispatch } from "./useConfig";
 
 // Slice
 
-const initConfig: IConfig = {
+const initConfig: Partial<IConfig> = {
   visibility: false,
 };
 const slice = createSlice({
   name: "config",
   initialState: {
     initConfig,
+    type: "",
+    visible: false,
   },
   reducers: {
     update: (state, action) => {
       state.initConfig = action.payload;
     },
-    deleteConfig: (state, action) => {
+    show: (state, action) => {
+      state.type = action.payload.type;
+      state.visible = action.payload.visible;
+    },
+    deleteConfig: (state) => {
       state.initConfig = { visibility: false };
     },
   },
 });
 export default slice.reducer;
 // Actions
-const { update, deleteConfig } = slice.actions;
+const { update, deleteConfig, show } = slice.actions;
 
-export const updateConfig = (config: IConfig) => (dispatch: AppDispatch) => {
-  dispatch(update({ config }));
+export const updateConfig =
+  (config: Partial<IConfig>) => (dispatch: AppDispatch) => {
+    dispatch(update(config));
+  };
+
+export const showComponents = (item: object) => (dispatch: AppDispatch) => {
+  dispatch(show(item));
 };
 export const clearConfig = () => (dispatch: AppDispatch) => {
-  dispatch(deleteConfig({}));
+  dispatch(deleteConfig());
 };

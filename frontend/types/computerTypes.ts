@@ -27,9 +27,9 @@ export type IComponent = {
   caracteristics: ICaracteristic[];
 };
 export type IConfig = {
-  _id?: string;
-  userId?: string;
-  config?: { price: number; components: Partial<IComponent[]> };
-  socket?: string;
+  _id: string;
+  userId: string;
+  config: { price: number; components: Partial<IComponent[]> };
+  socket: string;
   visibility: boolean;
 };
