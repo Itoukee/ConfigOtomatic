@@ -30,6 +30,7 @@ export type IConfig = {
   _id: string;
   userId: string;
   config: { price: number; components: Partial<IComponent[]> };
+  price: number;
   socket: string;
   visibility: boolean;
 };
