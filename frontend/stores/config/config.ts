@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { IConfig } from "../../types/computerTypes";
-import { AppDispatch } from "./useConfig";
+import { AppDispatch, RootState } from "./useConfig";
 
 // Slice
 
 const initConfig: Partial<IConfig> = {
   visibility: false,
 };
+
 const slice = createSlice({
   name: "config",
   initialState: {
@@ -42,3 +44,6 @@ export const showComponents = (item: object) => (dispatch: AppDispatch) => {
 export const clearConfig = () => (dispatch: AppDispatch) => {
   dispatch(deleteConfig());
 };
+
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

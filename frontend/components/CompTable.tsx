@@ -1,7 +1,9 @@
-import { cp } from "fs/promises";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { showComponents, updateConfig } from "../stores/config/config";
+import {
+  showComponents,
+  updateConfig,
+  useAppDispatch,
+  useAppSelector,
+} from "../stores/config/config";
 import { RootState } from "../stores/config/useConfig";
 import { IComponent, IConfig } from "../types/computerTypes";
 
@@ -12,8 +14,8 @@ const CompTable = ({
   components: IComponent[];
   type: string;
 }) => {
-  const config = useSelector((state: RootState) => state.config);
-  const dispatch = useDispatch();
+  const config = useAppSelector((state: RootState) => state.config);
+  const dispatch = useAppDispatch();
 
   const addToConfig = (comp: IComponent) => {
     dispatch(showComponents({ visible: false }));
@@ -30,13 +32,12 @@ const CompTable = ({
     }
     const current = [...config.initConfig.config.components];
     if (current) {
-      const actualComponent = config.initConfig.config?.components.filter(
+      const actualComponent = current.filter(
         (component) => component?.type === comp.type
       );
       if (actualComponent[0]) {
         const index = current.indexOf(actualComponent[0]);
-        current.push(comp);
-        current.splice(index);
+        current[index] = comp;
 
         const newConfig: Partial<IConfig> = {
           config: {
@@ -49,6 +50,16 @@ const CompTable = ({
 
         return;
       }
+      current.push(comp);
+      dispatch(
+        updateConfig({
+          config: {
+            components: current,
+            price: config.initConfig.price || 0 + comp.price,
+          },
+        })
+      );
+      return;
     }
 
     console.error("anormal reaction");
@@ -68,7 +79,7 @@ const CompTable = ({
         <h1 className="text-center font-bold text-4xl">{type}</h1>
         <div className="flex flex-row items-center justify-around">
           <h2 className="text-2xl">
-            Total de la config : {config.initConfig.price || 0} €
+            Total de la config : {config.initConfig.config?.price || 0} €
           </h2>
           <h2 className="text-2xl">{components.length} produits compatibles</h2>
         </div>
@@ -80,6 +91,11 @@ const CompTable = ({
             key={i}
             onClick={() => addToConfig(comp)}
           >
+            {comp.stock > 0 ? (
+              <div className="h-5 w-5 rounded-xl bg-green-500"></div>
+            ) : (
+              <div className="h-5 w-5 rounded-xl bg-red-500"></div>
+            )}
             <p>{comp.brand}</p>
             <p>{comp.title}</p>
             <p>{comp.socket}</p>

@@ -1,5 +1,6 @@
 import { IComponent } from "../models/component";
 import Component from "../models/component";
+import { IType } from "../types/configTypes";
 
 class ComponentService {
   static async addOne(component: IComponent) {
@@ -14,7 +15,13 @@ class ComponentService {
   static async getOne(componentId: IComponent["_id"]) {
     return await Component.findById(componentId);
   }
-  static async updateOne(componentId: IComponent["_id"], newValues: Partial<IComponent>) {
+  static async getByValue(key: string, value: string) {
+    return await Component.find({ key: value });
+  }
+  static async updateOne(
+    componentId: IComponent["_id"],
+    newValues: Partial<IComponent>
+  ) {
     return await Component.findByIdAndUpdate(componentId, newValues);
   }
 }

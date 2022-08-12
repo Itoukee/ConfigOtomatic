@@ -11,6 +11,7 @@ export interface IComponent extends Partial<Document> {
   rated: number;
   stock: number;
   price: number;
+  socket?: string;
   caracteristics: ICaracteristic[];
 }
 
@@ -19,8 +20,11 @@ const componentSchema = new Schema<IComponent>(
     type: { type: String },
     title: { type: String },
     image: { type: String },
+    brand: { type: String },
     rated: { type: Number },
+    price: { type: Number },
     stock: { type: Number },
+    socket: { type: String },
     caracteristics: { type: [Object] },
   },
   { collection: "Component", timestamps: true }

@@ -1,5 +1,3 @@
-import { IComponent } from "../models/component";
-
 export type IType =
   | "CPU"
   | "RAM"
