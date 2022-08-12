@@ -3,7 +3,7 @@ import "../config";
 import jwt from "jsonwebtoken";
 import { IUser } from "../models/user";
 import config from "../config";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import UserService from "../services/users.service";
 
 const controller = {
@@ -37,7 +37,7 @@ const controller = {
 
         res.status(201).send("User created ! ");
       } else {
-        res.status(400).send("Email already used")
+        res.status(400).send("Email already used");
       }
     } catch (error) {
       next(error);
@@ -50,15 +50,17 @@ const controller = {
         res.status(400).send("Bad JSON request");
       }
 
-      const user: IUser | null = await AuthService.findUser(req.body.mail);
+      const user: IUser | undefined = await AuthService.findUser(req.body.mail);
       const refresh_token: string | undefined = req.body.refresh_token;
       const password: string | undefined = req.body.password;
 
-      if (!user) return res.status(401).send('No user');
-      const validPassword: string | undefined = await bcrypt.compare(password, user?.password);
+      if (!user) return res.status(404).send("No user");
+      const validPassword: string | undefined = await bcrypt.compare(
+        password,
+        user.password
+      );
 
-
-      if ((refresh_token === user?.refresh_token)) {
+      if (refresh_token === user?.refresh_token) {
         await updateToken(user);
         res.status(200).send("Connected with token");
       } else if (validPassword) {
@@ -73,7 +75,6 @@ const controller = {
   },
 };
 
-
 async function updateToken(user: IUser) {
   const token: string = jwt.sign(
     { mail: user?.email, password: user?.password },
@@ -82,7 +83,7 @@ async function updateToken(user: IUser) {
       expiresIn: config.JWT_EXPIRES_IN,
     }
   );
-  await UserService.patchUser(user['_id'],{refresh_token : token})
+  await UserService.patchUser(user["_id"], { refresh_token: token });
 }
 
 export default controller;

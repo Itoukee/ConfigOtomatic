@@ -24,21 +24,11 @@ const slice = createSlice({
       state.type = action.payload.type;
       state.visible = action.payload.visible;
     },
-    removeOne: (state, action) => {
-      const index = state.initConfig.config?.components.findIndex(
-        (comp: IComponent) => comp.type == action.payload.type
-      );
-      if (state.initConfig.config && index)
-        state.initConfig.config.components.splice(index);
-    },
-    deleteConfig: (state) => {
-      state.initConfig = { visibility: false };
-    },
   },
 });
 export default slice.reducer;
 // Actions
-const { update, deleteConfig, show, removeOne } = slice.actions;
+const { update, show } = slice.actions;
 
 export const updateConfig =
   (config: Partial<IConfig>) => (dispatch: AppDispatch) => {
@@ -48,14 +38,6 @@ export const updateConfig =
 export const showComponents = (item: object) => (dispatch: AppDispatch) => {
   dispatch(show(item));
 };
-export const clearConfig = () => (dispatch: AppDispatch) => {
-  dispatch(deleteConfig());
-};
-
-export const removeComponentByType =
-  (type: IType) => (dispatch: AppDispatch) => {
-    dispatch(removeOne(type));
-  };
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;

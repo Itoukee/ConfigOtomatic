@@ -1,6 +1,5 @@
 import { IComponent } from "../models/component";
 import Component from "../models/component";
-import { IType } from "../types/configTypes";
 
 class ComponentService {
   static async addOne(component: IComponent) {
