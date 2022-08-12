@@ -1,12 +1,17 @@
 import { ComponentService } from "../services/components.service";
+import { useAppSelector } from "../stores/config/config";
+import { RootState } from "../stores/config/useConfig";
 import { IComponent } from "../types/computerTypes";
 import CompInput from "./CompInput";
 
 const Components = ({ components }: { components: IComponent[] }) => {
+  const config = useAppSelector(
+    (state: RootState) => state.config.initConfig.config
+  );
   return (
     <div>
-      <h1>Les composants</h1>
-      <div className="flex flex-col space-y-5">
+      <div className="flex flex-col space-y-5 w-full px-5">
+        <h1>Les composants</h1>
         <CompInput
           type="CPU"
           components={components.filter((component) => component.type == "CPU")}

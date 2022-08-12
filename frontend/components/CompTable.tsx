@@ -42,7 +42,10 @@ const CompTable = ({
         const newConfig: Partial<IConfig> = {
           config: {
             components: current,
-            price: config.initConfig.price || 0 + comp.price,
+            price:
+              config.initConfig.config.price -
+              actualComponent[0].price +
+              comp.price,
           },
         };
 
@@ -51,19 +54,18 @@ const CompTable = ({
         return;
       }
       current.push(comp);
+
       dispatch(
         updateConfig({
           config: {
             components: current,
-            price: config.initConfig.price || 0 + comp.price,
+            price: config.initConfig.config.price + comp.price,
           },
         })
       );
       return;
     }
-
     console.error("anormal reaction");
-
     return;
   };
 

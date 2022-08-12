@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
 import Components from "../components/Components";
 import CompTable from "../components/CompTable";
+import ConfigPeak from "../components/ConfigPeak";
 import { ComponentService } from "../services/components.service";
-import useConfig, { RootState } from "../stores/config/useConfig";
+import { useAppSelector } from "../stores/config/config";
+import { RootState } from "../stores/config/useConfig";
 import { IComponent, IType } from "../types/computerTypes";
 
 const Home = ({ components }: { components: IComponent[] }) => {
-  const config = useSelector((state: RootState) => state.config);
+  const config = useAppSelector((state: RootState) => state.config);
 
   return (
     <div className="w-screen h-screen overflow-x-hidden">
@@ -23,10 +24,12 @@ const Home = ({ components }: { components: IComponent[] }) => {
         <h2>by Tropdachats</h2>
       </div>
       <div className="h-5/6 w-full flex flex-row justify-evenly mt-3">
-        <div className="bg-red-300">
+        <div className="bg-red-300 w-1/2">
           <Components components={components} />
         </div>
-        <div className="bg-red-300">Aperçu de ma config</div>
+        <div className="bg-gray-300 w-1/3">
+          <ConfigPeak />
+        </div>
       </div>
     </div>
   );

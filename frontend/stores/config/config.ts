@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { IConfig } from "../../types/computerTypes";
+import { IComponent, IConfig, IType } from "../../types/computerTypes";
 import { AppDispatch, RootState } from "./useConfig";
 
 // Slice
@@ -24,6 +24,13 @@ const slice = createSlice({
       state.type = action.payload.type;
       state.visible = action.payload.visible;
     },
+    removeOne: (state, action) => {
+      const index = state.initConfig.config?.components.findIndex(
+        (comp: IComponent) => comp.type == action.payload.type
+      );
+      if (state.initConfig.config && index)
+        state.initConfig.config.components.splice(index);
+    },
     deleteConfig: (state) => {
       state.initConfig = { visibility: false };
     },
@@ -31,7 +38,7 @@ const slice = createSlice({
 });
 export default slice.reducer;
 // Actions
-const { update, deleteConfig, show } = slice.actions;
+const { update, deleteConfig, show, removeOne } = slice.actions;
 
 export const updateConfig =
   (config: Partial<IConfig>) => (dispatch: AppDispatch) => {
@@ -44,6 +51,11 @@ export const showComponents = (item: object) => (dispatch: AppDispatch) => {
 export const clearConfig = () => (dispatch: AppDispatch) => {
   dispatch(deleteConfig());
 };
+
+export const removeComponentByType =
+  (type: IType) => (dispatch: AppDispatch) => {
+    dispatch(removeOne(type));
+  };
 
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
