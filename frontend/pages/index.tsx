@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import Components from "../components/Components";
 import CompTable from "../components/CompTable";
 import ConfigPeak from "../components/ConfigPeak";
 import { ComponentService } from "../services/components.service";
+import { ConfigService } from "../services/configs.service";
 import { useAppSelector } from "../stores/config";
 import { RootState } from "../stores/useStore";
 import { IComponent, IType } from "../types/computerTypes";

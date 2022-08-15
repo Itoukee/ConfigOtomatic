@@ -1,4 +1,4 @@
-import { createConfig, getConfigs } from "../api/configs";
+import { createConfig, getConfigs, getOne } from "../api/configs";
 import { IComponent, IConfig } from "../types/computerTypes";
 
 export const ConfigService = {
@@ -6,6 +6,15 @@ export const ConfigService = {
     try {
       const configs: IConfig[] = await getConfigs(userId);
       return configs;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+  getOne: async (userId: string) => {
+    try {
+      const config: IConfig = await getOne(userId);
+      return config;
     } catch (error) {
       console.error(error);
       return null;

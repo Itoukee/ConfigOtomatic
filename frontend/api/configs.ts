@@ -15,3 +15,6 @@ export const createConfig = async (
 
 export const getConfigs = async (userId: string) =>
   (await backend.get(`config/${userId}`)).data;
+
+export const getOne = async (id: string) =>
+  (await backend.get(`config/one/${id}`)).data;

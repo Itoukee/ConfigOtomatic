@@ -1,22 +1,40 @@
-import { useState } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import { ConfigService } from "../services/configs.service";
 import { useAppSelector } from "../stores/config";
 import { RootState } from "../stores/useStore";
-import { IComponent } from "../types/computerTypes";
+import { IComponent, IConfig } from "../types/computerTypes";
 
 const ConfigPeak = () => {
   const config = useAppSelector(
     (state: RootState) => state.config.initConfig.config
   );
   const user = useAppSelector((state: RootState) => state.config.user);
+  const router = useRouter();
+
   const [rename, setRename] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
+  const [configList, setConfigList] = useState<IConfig[]>([]);
 
   const handleSubmit = async () => {
-    if (config && user)
+    if (config && user) {
       await ConfigService.createOne([...config?.components], user._id, name);
+    }
     setRename(false);
   };
+
+  const getConfigs = async () => {
+    if (user) {
+      const temp = await ConfigService.getAll(user._id);
+      if (temp) {
+        setConfigList(temp);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getConfigs();
+  }, []);
 
   return (
     <div className="flex flex-col space-y-3 px-5">
@@ -61,6 +79,7 @@ const ConfigPeak = () => {
             className="bg-gray-700 text-green-400 rounded"
             type={"text"}
             placeholder={"Ma config"}
+            onChange={(event) => setName(event.target.value)}
           ></input>
           <button
             className="bg-green-400 rounded text-gray-700 px-5"
@@ -70,6 +89,17 @@ const ConfigPeak = () => {
           </button>
         </div>
       )}
+      <div>
+        {configList.map((item, i) => (
+          <p
+            key={i}
+            className="text-center"
+            onClick={() => router.push(`/config/${item._id}`)}
+          >
+            {item.name}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };

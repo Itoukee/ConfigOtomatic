@@ -18,6 +18,7 @@ const controller = {
       const newConfig: Partial<IConfig> = {
         userId: userId,
         name: name || `${price}`,
+        price: price,
         config: { components: components, price: price },
         visibility: false,
       };
@@ -28,7 +29,19 @@ const controller = {
       next(error);
     }
   },
-  getConfig: async (req, res, next) => {
+  getConfigs: async (req, res, next) => {
+    try {
+      const config: IConfig[] | undefined = await ConfigService.getAll(
+        req.params.id
+      );
+      if (!config) return res.status(400).send("No Config");
+      return res.status(200).send(config);
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  getById: async (req, res, next) => {
     try {
       const config: IConfig | undefined = await ConfigService.getOne(
         req.params.id
