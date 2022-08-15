@@ -1,4 +1,4 @@
-import { IComponent } from "../types/computerTypes";
+import { IComponent, IConfig } from "../types/computerTypes";
 import { backend } from "./config";
 
 export const createConfig = async (
@@ -18,3 +18,6 @@ export const getConfigs = async (userId: string) =>
 
 export const getOne = async (id: string) =>
   (await backend.get(`config/one/${id}`)).data;
+
+export const editVisibility = async (id: string, newValues: Partial<IConfig>) =>
+  (await backend.patch(`config/${id}`, newValues)).data;

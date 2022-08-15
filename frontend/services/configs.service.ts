@@ -1,4 +1,9 @@
-import { createConfig, getConfigs, getOne } from "../api/configs";
+import {
+  createConfig,
+  editVisibility,
+  getConfigs,
+  getOne,
+} from "../api/configs";
 import { IComponent, IConfig } from "../types/computerTypes";
 
 export const ConfigService = {
@@ -23,6 +28,15 @@ export const ConfigService = {
   createOne: async (components: IComponent[], userId: string, name: string) => {
     try {
       await createConfig(components, userId, name);
+    } catch (error) {
+      throw error;
+    }
+  },
+  updateVisibility: async (visibility: boolean, id: IConfig["_id"]) => {
+    try {
+      const newValues: Partial<IConfig> = { visibility: visibility };
+      const config = await editVisibility(id, newValues);
+      return config;
     } catch (error) {
       throw error;
     }
