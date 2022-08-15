@@ -3,8 +3,8 @@ import {
   updateConfig,
   useAppDispatch,
   useAppSelector,
-} from "../stores/config/config";
-import { RootState } from "../stores/config/useConfig";
+} from "../stores/config";
+import { RootState } from "../stores/useStore";
 import { IComponent, IConfig } from "../types/computerTypes";
 
 const CompTable = ({
@@ -70,7 +70,7 @@ const CompTable = ({
   };
 
   return (
-    <div className="absolute  w-3/5 right-0 h-full bg-slate-400 ">
+    <div className="absolute  w-3/5 right-0 h-full bg-slate-400 z-50 ">
       <div
         className="cursor-pointer"
         onClick={() => dispatch(showComponents({ visible: false }))}

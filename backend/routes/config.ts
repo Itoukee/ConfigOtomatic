@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/:id", controller.getConfig);
 
-router.post("/create", controller.createConfig);
+router.post("/create/:userId", controller.createConfig);
 
 router.patch("/:id", controller.updateConfig);
 

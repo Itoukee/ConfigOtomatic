@@ -1,6 +1,6 @@
 import { ComponentService } from "../services/components.service";
-import { useAppSelector } from "../stores/config/config";
-import { RootState } from "../stores/config/useConfig";
+import { useAppSelector } from "../stores/config";
+import { RootState } from "../stores/useStore";
 import { IComponent } from "../types/computerTypes";
 import CompInput from "./CompInput";
 

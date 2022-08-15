@@ -1,11 +1,22 @@
-import { useAppSelector } from "../stores/config/config";
-import { RootState } from "../stores/config/useConfig";
+import { useState } from "react";
+import { ConfigService } from "../services/configs.service";
+import { useAppSelector } from "../stores/config";
+import { RootState } from "../stores/useStore";
 import { IComponent } from "../types/computerTypes";
 
 const ConfigPeak = () => {
   const config = useAppSelector(
     (state: RootState) => state.config.initConfig.config
   );
+  const user = useAppSelector((state: RootState) => state.config.user);
+  const [rename, setRename] = useState<boolean>(false);
+  const [name, setName] = useState<string>("");
+
+  const handleSubmit = async () => {
+    if (config && user)
+      await ConfigService.createOne([...config?.components], user._id, name);
+    setRename(false);
+  };
 
   return (
     <div className="flex flex-col space-y-3 px-5">
@@ -35,6 +46,30 @@ const ConfigPeak = () => {
         <h2>Total : </h2>
         <h1 className="text-red-500">{config?.price || 0}€</h1>
       </div>
+      {config && user && !rename && (
+        <button
+          className="bg-green-400 rounded text-gray-700"
+          onClick={() => setRename(true)}
+        >
+          Sauvegarder cette configuration
+        </button>
+      )}
+      {rename && (
+        <div className="flex flex-row h-full justify-center bg-black shadow space-x-5">
+          <p className="text-white">Donne lui un nom ! </p>
+          <input
+            className="bg-gray-700 text-green-400 rounded"
+            type={"text"}
+            placeholder={"Ma config"}
+          ></input>
+          <button
+            className="bg-green-400 rounded text-gray-700 px-5"
+            onClick={() => handleSubmit()}
+          >
+            Sauvegarder
+          </button>
+        </div>
+      )}
     </div>
   );
 };

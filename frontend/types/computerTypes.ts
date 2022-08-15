@@ -29,6 +29,7 @@ export type IComponent = {
 export type IConfig = {
   _id: string;
   userId: string;
+  name: string;
   config: { price: number; components: IComponent[] };
   price: number;
   socket: string;

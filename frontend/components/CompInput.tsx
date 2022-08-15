@@ -8,8 +8,8 @@ import {
   updateConfig,
   useAppDispatch,
   useAppSelector,
-} from "../stores/config/config";
-import { RootState } from "../stores/config/useConfig";
+} from "../stores/config";
+import { RootState } from "../stores/useStore";
 
 type CompInputProps = {
   components: IComponent[];

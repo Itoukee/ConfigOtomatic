@@ -46,13 +46,13 @@ const controller = {
 
   login: async (req, res, next) => {
     try {
-      if (req.body.refresh_token == null) {
-        res.status(400).send("Bad JSON request");
-      }
-
-      const user: IUser | undefined = await AuthService.findUser(req.body.mail);
       const refresh_token: string | undefined = req.body.refresh_token;
+      const email: string | undefined = req.body.email;
       const password: string | undefined = req.body.password;
+
+      console.log(email, password);
+
+      const user = await AuthService.findUser(email);
 
       if (!user) return res.status(404).send("No user");
       const validPassword: string | undefined = await bcrypt.compare(
@@ -60,14 +60,11 @@ const controller = {
         user.password
       );
 
-      if (refresh_token === user?.refresh_token) {
+      if (refresh_token === user?.refresh_token || validPassword) {
         await updateToken(user);
-        res.status(200).send("Connected with token");
-      } else if (validPassword) {
-        await updateToken(user);
-        res.status(200).send("Connected with password");
+        res.status(200).send(user);
       } else {
-        res.status(401).send("Cannot login");
+        res.status(401).send("Unauthorized");
       }
     } catch (error) {
       next(error);

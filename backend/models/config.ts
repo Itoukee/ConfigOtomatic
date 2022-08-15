@@ -4,6 +4,7 @@ import { IComponent } from "./component";
 
 export interface IConfig extends Partial<Document> {
   _id: ObjectId;
+  name: string;
   userId: string;
   config: { price: number; components: Partial<IComponent[]> };
   socket?: string;
@@ -12,6 +13,7 @@ export interface IConfig extends Partial<Document> {
 
 const componentSchema = new Schema<IConfig>(
   {
+    name: { type: String },
     userId: { type: String },
     config: { type: Object },
     socket: { type: String },

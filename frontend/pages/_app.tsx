@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import config from "../stores/config/useConfig";
+import config from "../stores/useStore";
 
 import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
