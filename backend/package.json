@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest",
     "dev": "nodemon ./bin/www.ts",
     "eslint": "eslint --ext .tsx,.ts,.js ./"
   },
@@ -26,10 +26,7 @@
     "mongoose": "^6.4.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.19",
-    "ora": "5.4.1",
-    "parser": "^0.1.4",
-    "passport-google-oauth2": "^0.2.0",
-    "passport-session": "^1.0.2"
+    "ora": "5.4.1"
   },
   "devDependencies": {
     "@types/express-session": "^1.17.5",
@@ -41,6 +38,7 @@
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.19.0",
     "nodemon": "^2.0.12",
+    "ts-jest": "^28.0.8",
     "ts-node": "^10.8.1"
   }
 }
