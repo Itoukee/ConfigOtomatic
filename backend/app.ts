@@ -49,7 +49,7 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/components", componentRoute);
-app.use("/config", configRoute);
+app.use("/config", auth, configRoute);
 app.use("/", admin, adminRoute)
 
 /** 404 error handler */
