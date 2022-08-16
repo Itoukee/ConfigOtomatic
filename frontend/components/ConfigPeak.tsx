@@ -89,11 +89,11 @@ const ConfigPeak = () => {
           </button>
         </div>
       )}
-      <div>
+      <div className="flex flex-col space-y-4">
         {configList.map((item, i) => (
           <p
             key={i}
-            className="text-center"
+            className="text-center border text-lg font-bold bg-slate-500"
             onClick={() => router.push(`/config/${item._id}`)}
           >
             {item.name}

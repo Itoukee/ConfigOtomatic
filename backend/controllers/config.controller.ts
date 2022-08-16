@@ -54,17 +54,18 @@ const controller = {
   },
   updateConfig: async (req, res, next) => {
     try {
-      if (!req.body.newValues) return res.status(400).send("Bad JSON Request");
+      if (!req.body) return res.status(400).send("Bad JSON Request");
       const config: IConfig | undefined = await ConfigService.getOne(
         req.params.id
       );
       if (!config) return res.status(400).send("No Config");
-      await ConfigService.patchOne(req.params.id, req.body.newValues);
+      await ConfigService.patchOne(req.params.id, req.body);
       res.status(200).send("Config Patched");
     } catch (error) {
       next(error);
     }
   },
+
   deleteConfig: async (req, res, next) => {
     try {
       await ConfigService.deleteOne(req.params.id);

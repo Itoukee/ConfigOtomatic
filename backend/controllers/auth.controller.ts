@@ -9,13 +9,13 @@ import UserService from "../services/users.service";
 const controller = {
   createOne: async (req, res, next) => {
     try {
-      const user: IUser | null = await AuthService.findUser(req.body.mail);
-      const email: string | undefined = req.body.mail;
+      const user: IUser | null = await AuthService.findUser(req.body.email);
+      const email: string | undefined = req.body.email;
       let password: string | undefined = req.body.password;
 
       if (!user) {
         if (!email || !password) {
-          res.status(400).send("Bad JSON request");
+          return res.status(400).send("Bad JSON request");
         }
         const salt: string = await bcrypt.genSalt(10);
         password = await bcrypt.hash(password, salt);
@@ -29,15 +29,15 @@ const controller = {
         );
         if (!token) return res.status(401).send("No Token");
 
-        AuthService.createOne({
+        const user = await AuthService.createOne({
           email: email,
           password: password,
           refresh_token: token,
         });
 
-        res.status(201).send("User created ! ");
+        return res.status(201).send(user);
       } else {
-        res.status(400).send("Email already used");
+        return res.status(400).send("Email already used");
       }
     } catch (error) {
       next(error);
