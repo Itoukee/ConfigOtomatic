@@ -1,5 +1,6 @@
 import express from "express";
 import controller from "../controllers/users.controller";
+import auth from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
@@ -19,9 +20,6 @@ router.get("/:userId", controller.getUser);
  */
 router.patch("/:userId", controller.patchUser);
 
-/**
- *  /users/one/userId : Delete a user
- */
-router.delete("/:userId", controller.deleteUser);
+router.use(auth)
 
 export default router;

@@ -50,8 +50,6 @@ const controller = {
       const email: string | undefined = req.body.email;
       const password: string | undefined = req.body.password;
 
-      console.log(email, password);
-
       const user = await AuthService.findUser(email);
 
       if (!user) return res.status(404).send("No user");
@@ -68,6 +66,26 @@ const controller = {
       }
     } catch (error) {
       next(error);
+    }
+  },
+  setAdmin: async (req, res, next) => {
+    try {
+      const user = await UserService.getUser(req.params.userId);
+      if (!user) {return res.status(400).send("No user")}
+      await UserService.patchUser(req.params.userId, {superAdmin: true});
+      res.status(200).send("User set to admin")
+    } catch(error) {
+      next(error)
+    }
+  },
+  disbandAdmin: async (req, res, next) => {
+    try {
+      const user = await UserService.getUser(req.params.userId);
+      if (!user) {return res.status(400).send("No user")}
+      await UserService.patchUser(req.params.userId, {superAdmin: false});
+      res.status(200).send("User set to non-admin")
+    } catch(error) {
+      next(error)
     }
   },
 };

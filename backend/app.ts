@@ -8,6 +8,7 @@ import authRoute from "./routes/auth";
 import userRoute from "./routes/user";
 import componentRoute from "./routes/component";
 import configRoute from "./routes/config";
+import adminRoute from "./routes/admin"
 
 import auth from "./middlewares/auth.middleware";
 import admin from "./middlewares/admin.middleware";
@@ -46,9 +47,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoute);
-app.use("/users", auth, userRoute);
+app.use("/users", userRoute);
 app.use("/components", componentRoute);
-app.use("/config", auth, configRoute);
+app.use("/config", configRoute);
+app.use("/", admin, adminRoute)
 
 /** 404 error handler */
 app.use((req, res) => {
