@@ -1,5 +1,4 @@
 import Config, { IConfig } from "../models/config";
-import { IUser } from "../models/user";
 
 class ConfigService {
   static async addOne(config: Partial<IConfig>) {
