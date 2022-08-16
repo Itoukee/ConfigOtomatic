@@ -13,13 +13,12 @@ const controller = {
     }
   },
   deleteComponent: async (req, res, next) => {
-    try { 
+    try {
       const componentId = req.params.id;
       const comp = await ComponentService.deleteOne(componentId);
-      
+
       if (comp) return res.status(204).send("Component deleted");
       return res.status(404).send();
-
     } catch (error) {
       next(error);
     }
@@ -32,23 +31,44 @@ const controller = {
       next(error);
     }
   },
+
+  getComponentByValue: async (req, res, next) => {
+    try {
+      const search: object = req.query;
+      if (search === {}) return res.status(400).send("No queries");
+
+      const key = Object.keys(search)[0];
+      const value = search[key];
+
+      if (key && value !== "") {
+        const components = await ComponentService.getByValue(key, value);
+        return res.send(components);
+      }
+    } catch (error) {
+      next(error);
+    }
+  },
+
   getOneComponent: async (req, res, next) => {
     try {
-      const component: IComponent | undefined = await ComponentService.getOne(req.params.id);
+      const componentId = req.params.id;
+      const component: IComponent | undefined = await ComponentService.getOne(
+        componentId
+      );
       return res.status(200).send(component);
-    } catch(error) {
+    } catch (error) {
       next(error);
     }
   },
   patchOneComponent: async (req, res, next) => {
     try {
-      if (!req.body.newValues) return res.status(400).send('Bad JSON request');
+      if (!req.body.newValues) return res.status(400).send("Bad JSON request");
       await ComponentService.updateOne(req.params.id, req.bod.newValues);
-      res.status(200).send("Component Patched")
-    } catch(error) {
+      res.status(200).send("Component Patched");
+    } catch (error) {
       next(error);
     }
-  }
+  },
 };
 
 export default controller;

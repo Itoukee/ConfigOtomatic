@@ -1,7 +1,10 @@
 import User from "../models/user";
-import { config } from "dotenv";
 class AuthService {
-  static async createOne(user: { email: string; refresh_token: string; password : string }) {
+  static async createOne(user: {
+    email: string;
+    refresh_token: string;
+    password: string;
+  }) {
     return await User.create({
       email: user.email,
       password: user.password,

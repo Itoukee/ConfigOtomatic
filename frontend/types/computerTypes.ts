@@ -29,7 +29,9 @@ export type IComponent = {
 export type IConfig = {
   _id: string;
   userId: string;
-  config: { price: number; components: Partial<IComponent[]> };
-  socket?: string;
+  name: string;
+  config: { price: number; components: IComponent[] };
+  price: number;
+  socket: string;
   visibility: boolean;
 };
