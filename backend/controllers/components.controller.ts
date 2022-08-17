@@ -2,27 +2,6 @@ import { IComponent } from "../models/component";
 import ComponentService from "../services/component.service";
 
 const controller = {
-  createOne: async (req, res, next) => {
-    try {
-      const component: IComponent = req.body.component;
-
-      await ComponentService.addOne(component);
-      return res.status(204).send(component);
-    } catch (error) {
-      next(error);
-    }
-  },
-  deleteComponent: async (req, res, next) => {
-    try {
-      const componentId = req.params.id;
-      const comp = await ComponentService.deleteOne(componentId);
-
-      if (comp) return res.status(204).send("Component deleted");
-      return res.status(404).send();
-    } catch (error) {
-      next(error);
-    }
-  },
   getAllComponents: async (req, res, next) => {
     try {
       const components: IComponent[] = await ComponentService.getAll();
@@ -56,15 +35,6 @@ const controller = {
         componentId
       );
       return res.status(200).send(component);
-    } catch (error) {
-      next(error);
-    }
-  },
-  patchOneComponent: async (req, res, next) => {
-    try {
-      if (!req.body.newValues) return res.status(400).send("Bad JSON request");
-      await ComponentService.updateOne(req.params.id, req.bod.newValues);
-      res.status(200).send("Component Patched");
     } catch (error) {
       next(error);
     }

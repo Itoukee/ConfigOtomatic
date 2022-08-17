@@ -50,12 +50,10 @@ const controller = {
       const email: string | undefined = req.body.email;
       const password: string | undefined = req.body.password;
 
-      console.log(email, password);
-
       const user = await AuthService.findUser(email);
 
       if (!user) return res.status(404).send("No user");
-      const validPassword: string | undefined = await bcrypt.compare(
+      const validPassword: boolean | undefined = await bcrypt.compare(
         password,
         user.password
       );
@@ -69,7 +67,7 @@ const controller = {
     } catch (error) {
       next(error);
     }
-  },
+  }
 };
 
 async function updateToken(user: IUser) {
