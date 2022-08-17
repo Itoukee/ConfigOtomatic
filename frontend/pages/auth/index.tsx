@@ -16,11 +16,11 @@ const Auth = () => {
 
   const [state, setState] = useState<"login" | "register">("login");
   const [login, setLogin] = useState({ email: "", password: "" });
-  const [register, setRegister] = useState({
+  /* const [register, setRegister] = useState({
     email: "",
     password: "",
     verify: "",
-  });
+  }); TODO  */
 
   const handleSubmit = async () => {
     if (login.email && login.password != "") {

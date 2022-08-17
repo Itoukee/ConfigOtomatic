@@ -74,15 +74,6 @@ const CompInput = ({ components, type }: CompInputProps) => {
                 <h1>{component.brand}</h1>
                 <h2>{component.title}</h2>
               </div>
-              <div>
-                {component.caracteristics.map(
-                  (caracteristic: ICaracteristic, i) => (
-                    <p className="text-gray-300 font-thin text-xs px-" key={i}>
-                      {caracteristic.text.concat("...")}
-                    </p>
-                  )
-                )}
-              </div>
             </div>
           </div>
         </>

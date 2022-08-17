@@ -24,7 +24,6 @@ export type IComponent = {
   stock: number;
   price: number;
   socket?: string;
-  caracteristics: ICaracteristic[];
 };
 export type IConfig = {
   _id: string;
