@@ -2,21 +2,19 @@ import "./models/db";
 
 import express from "express";
 import logger from "morgan";
-import cookieParser from "cookie-parser"
+import cookieParser from "cookie-parser";
 
 import authRoute from "./routes/auth";
 import userRoute from "./routes/user";
 import componentRoute from "./routes/component";
 import configRoute from "./routes/config";
-import adminRoute from "./routes/admin"
-
-import auth from "./middlewares/auth.middleware";
-import admin from "./middlewares/admin.middleware";
+import adminRoute from "./routes/admin";
+import { auth, isAdmin } from "./middlewares/auth.middleware";
 
 const app = express();
 app.use(logger("dev"));
 
-app.use(cookieParser())
+app.use(cookieParser());
 app.use(express.json({ limit: "50mb" })); //this is the build in express body-parser
 app.use(
   //this mean we don't need to use body-parser anymore
@@ -46,7 +44,7 @@ app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/components", componentRoute);
 app.use("/config", auth, configRoute);
-app.use("/", admin, adminRoute)
+app.use("/admin", adminRoute);
 
 /** 404 error handler */
 app.use((req, res) => {
