@@ -32,6 +32,11 @@ const Pc = () => {
     if (newValue) setVisible(newValue.visibility);
   };
 
+  const handleDelete = async () => {
+    await ConfigService.deleteOne(id);
+    router.push("/");
+  };
+
   useEffect(() => {
     getConfig();
   }, [id, visible]);
@@ -74,6 +79,12 @@ const Pc = () => {
             onClick={() => router.push("/")}
           >
             Retourner au configurateur
+          </button>
+          <button
+            className="bg-red-400 rounded p-2 "
+            onClick={() => handleDelete()}
+          >
+            Supprimer cette configuration
           </button>
         </div>
       ) : (

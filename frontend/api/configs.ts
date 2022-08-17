@@ -21,3 +21,6 @@ export const getOne = async (id: string) =>
 
 export const editVisibility = async (id: string, newValues: Partial<IConfig>) =>
   (await backend.patch(`config/${id}`, newValues)).data;
+
+export const deleteConfig = async (id: string) =>
+  (await backend.delete(`config/${id}`)).data;

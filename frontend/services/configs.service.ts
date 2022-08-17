@@ -1,5 +1,6 @@
 import {
   createConfig,
+  deleteConfig,
   editVisibility,
   getConfigs,
   getOne,
@@ -37,6 +38,13 @@ export const ConfigService = {
       const newValues: Partial<IConfig> = { visibility: visibility };
       const config = await editVisibility(id, newValues);
       return config;
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteOne: async (id: string) => {
+    try {
+      await deleteConfig(id);
     } catch (error) {
       throw error;
     }
