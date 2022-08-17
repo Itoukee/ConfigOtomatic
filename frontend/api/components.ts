@@ -8,4 +8,7 @@ export const getAllComponents = async () =>
 export const createComponent = async (
   component: Partial<IComponent>,
   user: IUser
-) => await backend.post("admin/components/create", { component, user });
+) => (await backend.post("admin/components/create", { component, user })).data;
+
+export const deleteComp = async (id: string, user: IUser) =>
+  (await backend.delete(`admin/components/${id}`, { data: { user } })).data;

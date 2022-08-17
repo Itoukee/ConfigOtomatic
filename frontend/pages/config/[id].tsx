@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { ConfigService } from "../../services/configs.service";
 import { useAppSelector } from "../../stores/config";
 import { IComponent, IConfig } from "../../types/computerTypes";
-import { BsArrowLeftCircleFill } from "react-icons/bs";
 
 const Pc = () => {
   const router = useRouter();
@@ -33,7 +32,7 @@ const Pc = () => {
   };
 
   const handleDelete = async () => {
-    await ConfigService.deleteOne(id);
+    await ConfigService.deleteOne(id as string);
     router.push("/");
   };
 

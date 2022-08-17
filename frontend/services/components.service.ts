@@ -1,4 +1,8 @@
-import { createComponent, getAllComponents } from "../api/components";
+import {
+  createComponent,
+  deleteComp,
+  getAllComponents,
+} from "../api/components";
 import { IComponent } from "../types/computerTypes";
 import { IUser } from "../types/userType";
 
@@ -13,7 +17,16 @@ export const ComponentService = {
   },
   createOne: async (component: Partial<IComponent>, user: IUser) => {
     try {
-      await createComponent(component, user);
+      const comp = await createComponent(component, user);
+      return comp;
+    } catch (error) {
+      throw error;
+    }
+  },
+  deleteOne: async (id: string, user: IUser) => {
+    try {
+      await deleteComp(id, user);
+      return;
     } catch (error) {
       throw error;
     }
