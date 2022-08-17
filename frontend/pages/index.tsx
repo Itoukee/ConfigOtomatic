@@ -29,13 +29,22 @@ const Home = ({ components }: { components: IComponent[] }) => {
         <h1 className="text-2xl font-bold">Configaut&apos;omatic</h1>
         <h2>by Tropdachats</h2>
         {config.user ? (
-          <div
-            className="absolute right-5  flex  items-center space-x-3 bg-green-400 rounded px-4 py-2 text-gray-600 hover:bg-green-500 z-1 cursor-pointer "
-            onClick={() => router.push("/auth")}
-          >
-            <ImCross />
-            <p>Connected as {config.user.email}</p>
-          </div>
+          <>
+            <div
+              className="absolute right-5  flex  items-center space-x-3 bg-green-400 rounded px-4 py-2 text-gray-600 hover:bg-green-500 z-1 cursor-pointer "
+              onClick={() => router.push("/auth")}
+            >
+              <ImCross />
+              <p>Connected as {config.user.email}</p>
+            </div>
+
+            <div
+              className="absolute  right-1/3 flex  items-center space-x-3 bg-green-400 rounded px-4 py-2 text-gray-600 hover:bg-green-500 z-1 cursor-pointer "
+              onClick={() => router.push("/admin")}
+            >
+              Admin panel
+            </div>
+          </>
         ) : (
           <button
             className="absolute right-5 bg-green-400 rounded px-4 py-2 text-gray-600 hover:bg-green-500 z-1 "

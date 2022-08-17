@@ -2,17 +2,21 @@ import "./models/db";
 
 import express from "express";
 import logger from "morgan";
+import cookieParser from "cookie-parser"
 
 import authRoute from "./routes/auth";
 import userRoute from "./routes/user";
 import componentRoute from "./routes/component";
 import configRoute from "./routes/config";
-// App
+import adminRoute from "./routes/admin"
 
-//Route ping
+import auth from "./middlewares/auth.middleware";
+import admin from "./middlewares/admin.middleware";
+
 const app = express();
 app.use(logger("dev"));
 
+app.use(cookieParser())
 app.use(express.json({ limit: "50mb" })); //this is the build in express body-parser
 app.use(
   //this mean we don't need to use body-parser anymore
@@ -20,6 +24,7 @@ app.use(
     extended: true,
   })
 );
+
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
   res.setHeader(
@@ -32,6 +37,7 @@ app.use(function (req, res, next) {
   );
   next();
 });
+
 app.get("/", (req, res) => {
   res.status(200).send("Hello World");
 });
@@ -39,7 +45,8 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoute);
 app.use("/users", userRoute);
 app.use("/components", componentRoute);
-app.use("/config", configRoute);
+app.use("/config", auth, configRoute);
+app.use("/", admin, adminRoute)
 
 /** 404 error handler */
 app.use((req, res) => {

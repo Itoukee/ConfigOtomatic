@@ -30,15 +30,6 @@ const controller = {
     } catch (error) {
       next(error);
     }
-  },
-  deleteUser: async (req, res, next) => {
-    try {
-      if (!req.params.userId) return res.status(400).send("Bad JSON request");
-      UserService.deleteUser(req.params.userId);
-      res.status(200).send("User deleted");
-    } catch (error) {
-      next(error);
-    }
   }
 };
 

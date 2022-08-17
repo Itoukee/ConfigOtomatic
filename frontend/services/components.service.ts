@@ -11,7 +11,7 @@ export const ComponentService = {
       throw error;
     }
   },
-  createOne: async (component: IComponent, user: IUser) => {
+  createOne: async (component: Partial<IComponent>, user: IUser) => {
     try {
       await createComponent(component, user);
     } catch (error) {
