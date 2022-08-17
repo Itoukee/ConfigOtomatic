@@ -67,27 +67,7 @@ const controller = {
     } catch (error) {
       next(error);
     }
-  },
-  setAdmin: async (req, res, next) => {
-    try {
-      const user = await UserService.getUser(req.params.userId);
-      if (!user) {return res.status(400).send("No user")}
-      await UserService.patchUser(req.params.userId, {superAdmin: true});
-      res.status(200).send("User set to admin")
-    } catch(error) {
-      next(error)
-    }
-  },
-  disbandAdmin: async (req, res, next) => {
-    try {
-      const user = await UserService.getUser(req.params.userId);
-      if (!user) {return res.status(400).send("No user")}
-      await UserService.patchUser(req.params.userId, {superAdmin: false});
-      res.status(200).send("User set to non-admin")
-    } catch(error) {
-      next(error)
-    }
-  },
+  }
 };
 
 async function updateToken(user: IUser) {
