@@ -53,7 +53,7 @@ const controller = {
       const user = await AuthService.findUser(email);
 
       if (!user) return res.status(404).send("No user");
-      const validPassword: string | undefined = await bcrypt.compare(
+      const validPassword: boolean | undefined = await bcrypt.compare(
         password,
         user.password
       );

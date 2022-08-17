@@ -12,9 +12,7 @@ import adminRoute from "./routes/admin"
 
 import auth from "./middlewares/auth.middleware";
 import admin from "./middlewares/admin.middleware";
-// App
 
-//Route ping
 const app = express();
 app.use(logger("dev"));
 
@@ -26,8 +24,6 @@ app.use(
     extended: true,
   })
 );
-
-// app.use(auth)
 
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
