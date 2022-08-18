@@ -4,16 +4,16 @@ import { isAdmin } from "../middlewares/auth.middleware";
 
 const router = express.Router();
 
-router.delete("/users/:userId", controller.deleteUser);
+router.delete("/users/:userId", isAdmin, controller.deleteUser);
 
 router.post("/components/create", isAdmin, controller.createOne);
 
-router.delete("/components/:id", controller.deleteComponent);
+router.delete("/components/:id", isAdmin, controller.deleteComponent);
 
-router.patch("/components/:id", controller.patchOneComponent);
+router.patch("/components/:id", isAdmin, controller.patchOneComponent);
 
-router.patch("/auth/setAdmin/:userId", controller.setAdmin);
+router.patch("/auth/setAdmin/:userId", isAdmin, controller.setAdmin);
 
-router.patch("/auth/disbandAdmin/:userId", controller.disbandAdmin);
+router.patch("/auth/disbandAdmin/:userId", isAdmin, controller.disbandAdmin);
 
 export default router;

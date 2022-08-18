@@ -2,8 +2,6 @@ import { IUser } from "../models/user";
 import UserService from "../services/users.service";
 
 export const isAdmin = (req, res, next) => {
-  console.log(req.body);
-
   if (!req.body.user || !req.body.user.superAdmin) {
     const err: any = new Error("Forbidden");
     err.status = 403;

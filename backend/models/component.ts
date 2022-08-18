@@ -1,6 +1,6 @@
 import { Document, ObjectId } from "mongodb";
 import mongoose, { Schema } from "mongoose";
-import { ICaracteristic, IType } from "../types/configTypes";
+import { IType } from "../types/configTypes";
 
 export interface IComponent extends Partial<Document> {
   _id: ObjectId;
