@@ -12,3 +12,11 @@ export const createComponent = async (
 
 export const deleteComp = async (id: string, user: IUser) =>
   (await backend.delete(`admin/components/${id}`, { data: { user } })).data;
+
+export const editComp = async (
+  id: string,
+  component: Partial<IComponent>,
+  user: IUser
+) =>
+  (await backend.patch(`admin/components/${id}`, { data: { user, component } }))
+    .data;

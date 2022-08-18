@@ -1,6 +1,7 @@
 import {
   createComponent,
   deleteComp,
+  editComp,
   getAllComponents,
 } from "../api/components";
 import { IComponent } from "../types/computerTypes";
@@ -23,6 +24,18 @@ export const ComponentService = {
       throw error;
     }
   },
+  editOne: async (component: Partial<IComponent>, user: IUser) => {
+    try {
+      if (component._id) {
+        const comp = await editComp(component._id, component, user);
+        return comp;
+      }
+      return;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   deleteOne: async (id: string, user: IUser) => {
     try {
       await deleteComp(id, user);
